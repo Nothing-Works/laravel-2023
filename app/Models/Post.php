@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use function cache;
@@ -17,6 +18,11 @@ class Post
     public static function find($slug)
     {
         return static::all()->firstWhere('slug', $slug);
+    }
+
+    public static function findOrFail($slug)
+    {
+        return static::find($slug) ?? throw new ModelNotFoundException();
     }
 
     public static function all(): \Illuminate\Support\Collection

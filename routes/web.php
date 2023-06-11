@@ -21,16 +21,14 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
 Route::get('/categories/{category:slug}', function (Category $category) {
-    return view('posts', [
+    return view('posts.index', [
         'posts' => $category->posts->load(['category', 'author']),
-        'currentCategory' => $category,
-        'categories' => Category::all()
+        'currentCategory' => $category
     ]);
 })->name('category');
 
 Route::get('/authors/{author:username}', function (User $author) {
-    return view('posts', [
-        'posts' => $author->posts->load(['category', 'author']),
-        'categories' => Category::all()
+    return view('posts.index', [
+        'posts' => $author->posts->load(['category', 'author'])
     ]);
 });

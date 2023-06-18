@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -44,3 +45,5 @@ Route::get('/authors/{author:username}', function (User $author) {
         'posts' => $author->posts->load(['category', 'author'])
     ]);
 });
+
+Route::post('/newsletter', NewsletterController::class);

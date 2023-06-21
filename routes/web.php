@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('/posts/{post}', [PostController::class, 'show']);

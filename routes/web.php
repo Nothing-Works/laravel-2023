@@ -19,30 +19,38 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+Route::get('/admin/posts/create', [PostController::class, 'create'])
+    ->middleware('admin');
+Route::post('/admin/posts', [PostController::class, 'store'])
+    ->middleware('admin');
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::post('/posts/{post}/comments', [PostCommentController::class, 'store']);
 
-Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
+Route::get('/register', [RegisterController::class, 'create'])
+    ->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store'])
+    ->middleware('guest');
 
-Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
+Route::post('/logout', [SessionsController::class, 'destroy'])
+    ->middleware('auth');
 
-Route::get('/login', [SessionsController::class, 'create'])->middleware('guest');
-Route::post('/login', [SessionsController::class, 'store'])->middleware('guest');
+Route::get('/login', [SessionsController::class, 'create'])
+    ->middleware('guest');
+Route::post('/login', [SessionsController::class, 'store'])
+    ->middleware('guest');
 
 Route::get('/categories/{category:slug}', function (Category $category) {
     return view('posts.index', [
         'posts' => $category->posts->load(['category', 'author']),
-        'currentCategory' => $category
+        'currentCategory' => $category,
     ]);
 })->name('category');
 
 Route::get('/authors/{author:username}', function (User $author) {
     return view('posts.index', [
-        'posts' => $author->posts->load(['category', 'author'])
+        'posts' => $author->posts->load(['category', 'author']),
     ]);
 });
 
